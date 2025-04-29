@@ -43,3 +43,36 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Flutter build outputs and intermediate files
+build/
+.dart_tool/
+.packages
+.pub/
+.melos_tool/
+
+# IntelliJ / Android Studio / VSCode
+.idea/
+.vscode/
+
+# iOS and Android
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Pods/
+ios/.symlinks/
+ios/Runner.xcworkspace/
+android/.gradle/
+android/app/debug/
+android/app/profile/
+android/app/release/
+android/local.properties
+
+# macOS / Windows / Linux
+macos/Flutter/ephemeral/
+windows/flutter/ephemeral/
+linux/flutter/ephemeral/
+
+# Others
+*.log
+*.tmp
+*.iml
