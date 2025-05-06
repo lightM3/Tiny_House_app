@@ -13,5 +13,10 @@ namespace TinyHouseBackEnd.UserPackage
             : base(userName, password, email, phoneNumber, address, userRoleLevel)
         {
         }
+
+
+        public void AddComment() 
+        {
+        }
     }
 }

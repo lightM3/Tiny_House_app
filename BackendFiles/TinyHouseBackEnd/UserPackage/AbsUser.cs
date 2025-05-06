@@ -14,12 +14,12 @@ namespace TinyHouseBackEnd.UserPackage
     internal abstract class AbsUser
     {
 
-        private int UserId { get; set; }
-        private string UserName { get; set; }
-        private string Password { get; set; }
-        private string Email { get; set; }
-        private string PhoneNumber { get; set; }
-        private string Address { get; set; }
+        public int UserId { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
         public int UserRoleLevel { get; set; } // 0 = Admin, 1 = HomeOwner, 2 = Tenant
 
         private static readonly string connectionString = "Server=BERATZ\\SQLEXPRESS;Database=TinyHouseDb;Integrated Security=True;Encrypt=False";
@@ -62,7 +62,7 @@ namespace TinyHouseBackEnd.UserPackage
                             0 => new Admin(username, password, email, phone, address, userRole),
                             1 => new HomeOwner(username, password, email, phone, address, userRole),
                             2 => new Tenant(username, password, email, phone, address, userRole),
-                            _ => throw new Exception("Geçersiz kullanıcı rolü!")
+                            _ => throw new Exception("Invalid user role")
                         };
 
                         user.UserId = userId;
@@ -85,7 +85,7 @@ namespace TinyHouseBackEnd.UserPackage
 
                     if (userExists > 0)
                     {
-                        Console.WriteLine("Bu kullanıcı adı zaten alınmış.");
+                        Console.WriteLine("This userName allready exist.");
                         return null;
                     }
 
@@ -102,7 +102,7 @@ namespace TinyHouseBackEnd.UserPackage
 
                     if (rowsAffected == 0)
                     {
-                        Console.WriteLine("Kayıt yapılamadı.");
+                        Console.WriteLine("Registration was failed.");
                         return null;
                     }
 
@@ -111,7 +111,7 @@ namespace TinyHouseBackEnd.UserPackage
                         0 => new Admin(username, password, email, phoneNumber, address, userRoleLevel),
                         1 => new HomeOwner(username, password, email, phoneNumber, address, userRoleLevel),
                         2 => new Tenant(username, password, email, phoneNumber, address, userRoleLevel),
-                        _ => throw new Exception("Geçersiz kullanıcı rolü!")
+                        _ => throw new Exception("Invalid user role!")
                     };
                     user.UserId = (int)new SqlCommand("SELECT max(UserId) from tblUser", connection).ExecuteScalar();
                     user.UserName = username;
@@ -165,11 +165,11 @@ namespace TinyHouseBackEnd.UserPackage
 
                 if (rowsAffected > 0)
                 {
-                    Console.WriteLine("Kullanıcı başarıyla silindi.");
+                    Console.WriteLine("User Succesfully deleted.");
                 }
                 else
                 {
-                    Console.WriteLine("Kullanıcı silinemedi. Kullanıcı adı bulunamadı.");
+                    Console.WriteLine("User cant deleted.This UserName not exist.");
                 }
             }
         }
