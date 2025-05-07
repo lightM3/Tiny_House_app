@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|d:\\tiny_house_app\\backendfiles\\tinyhousebackend\\userpackage\\tenant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|solutionrelative:userpackage\\tenant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|d:\\tiny_house_app\\backendfiles\\tinyhousebackend\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|d:\\tiny_house_app\\backendfiles\\tinyhousebackend\\userpackage\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|solutionrelative:userpackage\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|d:\\tiny_house_app\\backendfiles\\tinyhousebackend\\userpackage\\absuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -17,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|d:\\tiny_house_app\\backendfiles\\tinyhousebackend\\userpackage\\homeowner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|solutionrelative:userpackage\\homeowner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|d:\\tiny_house_app\\backendfiles\\tinyhousebackend\\comment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{23929D4C-002C-4BFE-9013-527EFA4B48C6}|TinyHouseBackEnd.csproj|solutionrelative:comment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
@@ -40,7 +36,7 @@
               "RelativeDocumentMoniker": "UserPackage\\HomeOwner.cs",
               "ToolTip": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\UserPackage\\HomeOwner.cs",
               "RelativeToolTip": "UserPackage\\HomeOwner.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAkwBEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-03T12:03:44.459Z",
               "IsPinned": true,
@@ -64,27 +60,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Comment.cs",
-              "DocumentMoniker": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\Comment.cs",
-              "RelativeDocumentMoniker": "Comment.cs",
-              "ToolTip": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\Comment.cs",
-              "RelativeToolTip": "Comment.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\UserPackage\\Admin.cs",
+              "RelativeDocumentMoniker": "UserPackage\\Admin.cs",
+              "ToolTip": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\UserPackage\\Admin.cs",
+              "RelativeToolTip": "UserPackage\\Admin.cs",
+              "ViewState": "AgIAALYAAAAAAAAAAAAuwM8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-06T10:41:20.088Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Tenant.cs",
-              "DocumentMoniker": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\UserPackage\\Tenant.cs",
-              "RelativeDocumentMoniker": "UserPackage\\Tenant.cs",
-              "ToolTip": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\UserPackage\\Tenant.cs",
-              "RelativeToolTip": "UserPackage\\Tenant.cs",
-              "ViewState": "AgIAACUAAAAAAAAAAAAiwDoAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-03T12:04:27.353Z",
+              "WhenOpened": "2025-05-07T11:41:00.372Z",
               "EditorCaption": ""
             },
             {
@@ -95,20 +79,20 @@
               "RelativeDocumentMoniker": "UserPackage\\AbsUser.cs",
               "ToolTip": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\UserPackage\\AbsUser.cs",
               "RelativeToolTip": "UserPackage\\AbsUser.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAJ4AAABOAAAAAAAAAA==",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAuwB0AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-03T11:46:33.219Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAuwF0AAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAA+wEcAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-03T11:09:36.409Z",
               "EditorCaption": ""

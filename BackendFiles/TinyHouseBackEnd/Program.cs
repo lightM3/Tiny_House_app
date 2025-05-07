@@ -53,12 +53,25 @@ namespace TinyHouseBackEnd
             
             */
 
-            AbsUser user = AbsUser.UserFactory.Login("Mehmet", "1234");
+            AbsUser user = AbsUser.UserFactory.Login("Berat", "12345");
             if (user != null)
             {
                 if (user.UserRoleLevel == 0)
                 {
                     Console.WriteLine("Admin giriş yaptı.");
+                    if (user is Admin admin)
+                    {
+
+                        //admin.AddNewAccount("Hadise", "HadiseSifre", "Hadise@mail.com", "+905552229944", "İzmir Gaziemir, Turkey", 1);
+                        //admin.DeleteAccount(17);
+                        //admin.MakePassiveAccount(18);
+                        //admin.MakeActiveAccount(18);
+                        //admin.UpdateAccount(18, "Aleyna", "AleynaSifre", "Aleyna@mail.com", "+905556667788", "Iğdır, Turkey");
+                        //admin.DeleteHouse(4);
+                        //admin.MakeActiveHouse(2);
+                        //admin.MakePassiveHouse(1);
+                    }
+
                 }
                 else if (user.UserRoleLevel == 1)
                 {
@@ -66,7 +79,8 @@ namespace TinyHouseBackEnd
                     
                     if (user is HomeOwner owner)
                     {
-                    /*    //owner.addHouse(500, "Adana Merkez", "Merkezde patlayan 3+1", houseAvgStar: 5.2,isAvaiable:true);
+                    
+                        //owner.addHouse(500, "Adana Merkez", "Merkezde patlayan 3+1", houseAvgStar: 5.2,isAvaiable:true);
                         //owner.makeActiveHouse(1);
                         //owner.makePassiveHouse(2);
                         //owner.listMyHouse();
@@ -74,7 +88,7 @@ namespace TinyHouseBackEnd
                         //owner.updateHousePrice(4, 250);
                         //owner.unAddHouse(3);
                         //owner.listMyHouse();
-                    */
+                    
                     }
                     
 
@@ -84,14 +98,15 @@ namespace TinyHouseBackEnd
                     Console.WriteLine("Kiracı giriş yaptı.");
                     if (user is Tenant tenant) 
                     {
-
+                        /*
                         tenant.listAvailableHouses();
-                        //tenant.RentHouse(4);
-                        //tenant.UnRentHouse(4);
-                        //tenant.listAvailableHouses();
-                        //tenant.RentHouse(4);
-                        //tenant.listAvailableHouses();
-                        //tenant.AddComment(4, "Tekrar geldim yine memnun kaldım Çok iyi bir Ev :)", 3);
+                        tenant.RentHouse(4);
+                        tenant.UnRentHouse(4);
+                        tenant.listAvailableHouses();
+                        tenant.RentHouse(4);
+                        tenant.listAvailableHouses();
+                        tenant.AddComment(4, "Tekrar geldim yine memnun kaldım Çok iyi bir Ev :)", 3);
+                        */
                     }
 
                 }
