@@ -120,13 +120,7 @@ namespace TinyHouseBackEnd.UserPackage
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = @"
-            INSERT INTO tblComment (HouseId, UserId, Content, Star)
-            select @houseId, @userId, @content, @star
-            where EXISTS (
-                select 1 from tblHouse
-                where HouseId = @houseId and WhoRent = @userId
-            )";
+                string query = @"INSERT INTO tblComment (HouseId, UserId, Content, Star)select @houseId, @userId, @content, @starwhere EXISTS (select 1 from tblHousewhere HouseId = @houseId and WhoRent = @userId)";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@houseId", houseId);

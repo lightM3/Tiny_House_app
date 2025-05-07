@@ -53,7 +53,7 @@ namespace TinyHouseBackEnd
             
             */
 
-            AbsUser user = AbsUser.UserFactory.Login("Berat", "12345");
+            AbsUser user = AbsUser.UserFactory.Login("Tarık", "1234");
             if (user != null)
             {
                 if (user.UserRoleLevel == 0)
@@ -88,7 +88,8 @@ namespace TinyHouseBackEnd
                         //owner.updateHousePrice(4, 250);
                         //owner.unAddHouse(3);
                         //owner.listMyHouse();
-                    
+                        //owner.listHouseCommands(2); //
+
                     }
                     
 
@@ -98,15 +99,18 @@ namespace TinyHouseBackEnd
                     Console.WriteLine("Kiracı giriş yaptı.");
                     if (user is Tenant tenant) 
                     {
-                        /*
-                        tenant.listAvailableHouses();
-                        tenant.RentHouse(4);
-                        tenant.UnRentHouse(4);
-                        tenant.listAvailableHouses();
-                        tenant.RentHouse(4);
-                        tenant.listAvailableHouses();
-                        tenant.AddComment(4, "Tekrar geldim yine memnun kaldım Çok iyi bir Ev :)", 3);
-                        */
+
+                        //tenant.listAvailableHouses();
+                        //tenant.RentHouse(4);
+                        //tenant.UnRentHouse(4);
+                        //tenant.listAvailableHouses();
+                        //tenant.RentHouse(4);
+                        //tenant.listAvailableHouses();
+                        //tenant.AddComment(4, "Tekrar geldim yine memnun kaldım Çok iyi bir Ev :)", 3);
+                        //tenant.listAvailableHouses();
+                        //tenant.RentHouse(6);
+                        //tenant.AddComment(6, "Bornovada olması Güzeldi", 88);
+
                     }
 
                 }

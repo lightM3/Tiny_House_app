@@ -151,7 +151,7 @@ namespace TinyHouseBackEnd.UserPackage
                     
                     Console.WriteLine("-----------------------------------------");
 
-                    Console.WriteLine($"User Id: {this.UserId} \n" +
+                    Console.WriteLine($"HomeOwner Id: {this.UserId} \n" +
                     $"House Id.: {houseId} \n" +
                     $"House Price: {price} \n" +
                     $"House Location: {location} \n" +
@@ -169,10 +169,21 @@ namespace TinyHouseBackEnd.UserPackage
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                string ownerCheckQuery = "select UserId from tblHouse where HouseId = @houseid";
+                SqlCommand ownerCheckCommand = new SqlCommand(ownerCheckQuery, connection);
+                ownerCheckCommand.Parameters.AddWithValue("@houseid", houseid);
+                connection.Open();  
+                int ownerId = (int)ownerCheckCommand.ExecuteScalar();
+                
+                if (ownerId != this.UserId)
+                {
+                    Console.WriteLine("Access denied! You are not the owner of this house.");
+                    return;
+                }
+                
                 string query = "select * from tblComment where HouseId = @houseid";
                 SqlCommand sqlCommand = new SqlCommand(query, connection);
                 sqlCommand.Parameters.AddWithValue("@houseid", houseid);
-                connection.Open();
 
                 SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
@@ -184,7 +195,7 @@ namespace TinyHouseBackEnd.UserPackage
                     
                     Console.WriteLine("-----------------------------------------");
 
-                    Console.WriteLine($"User Id: {this.UserId} \n" +
+                    Console.WriteLine($"HomeOwner Id: {this.UserId} \n" +
                     $"Comment Id.: {commentid} \n" +
                     $"Commenter's Id: {userid} \n" +
                     $"Comment Content:  {content} \n" +
