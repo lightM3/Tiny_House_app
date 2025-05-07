@@ -53,7 +53,7 @@ namespace TinyHouseBackEnd
             
             */
 
-            AbsUser user = AbsUser.UserFactory.Login("Murat", "4321");
+            AbsUser user = AbsUser.UserFactory.Login("Mehmet", "1234");
             if (user != null)
             {
                 if (user.UserRoleLevel == 0)
@@ -63,23 +63,37 @@ namespace TinyHouseBackEnd
                 else if (user.UserRoleLevel == 1)
                 {
                     Console.WriteLine("Ev sahibi giriş yaptı.");
+                    
                     if (user is HomeOwner owner)
                     {
-                        //owner.addHouse(500, "Adana Merkez", "Merkezde patlayan 3+1", houseAvgStar: 5.2,isAvaiable:true);
+                    /*    //owner.addHouse(500, "Adana Merkez", "Merkezde patlayan 3+1", houseAvgStar: 5.2,isAvaiable:true);
                         //owner.makeActiveHouse(1);
                         //owner.makePassiveHouse(2);
                         //owner.listMyHouse();
                         //owner.listHouseCommands(1);
-                        owner.updateHousePrice(4, 250);
+                        //owner.updateHousePrice(4, 250);
                         //owner.unAddHouse(3);
                         //owner.listMyHouse();
+                    */
                     }
-
+                    
 
                 }
                 else if (user.UserRoleLevel == 2)
                 {
                     Console.WriteLine("Kiracı giriş yaptı.");
+                    if (user is Tenant tenant) 
+                    {
+
+                        tenant.listAvailableHouses();
+                        //tenant.RentHouse(4);
+                        //tenant.UnRentHouse(4);
+                        //tenant.listAvailableHouses();
+                        //tenant.RentHouse(4);
+                        //tenant.listAvailableHouses();
+                        //tenant.AddComment(4, "Tekrar geldim yine memnun kaldım Çok iyi bir Ev :)", 3);
+                    }
+
                 }
             }
             else

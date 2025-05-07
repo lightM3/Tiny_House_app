@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TinyHouseBackEnd")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+045fd4560434c79248c4babf76801783a6cf4cef")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+00f335c54d074955e099fb7961c2d41d5865452f")]
 [assembly: System.Reflection.AssemblyProductAttribute("TinyHouseBackEnd")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TinyHouseBackEnd")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
