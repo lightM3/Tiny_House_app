@@ -60,8 +60,8 @@ namespace TinyHouseBackEnd.UserPackage
                         AbsUser user = userRole switch
                         {
                             0 => new Admin(username, password, email, phone, address, userRole),
-                            1 => new HomeOwner(username, password, email, phone, address, userRole),
-                            2 => new Tenant(username, password, email, phone, address, userRole),
+                            2 => new HomeOwner(username, password, email, phone, address, userRole),
+                            1 => new Tenant(username, password, email, phone, address, userRole),
                             _ => throw new Exception("Invalid user role")
                         };
 
@@ -109,8 +109,8 @@ namespace TinyHouseBackEnd.UserPackage
                     AbsUser user = userRoleLevel switch
                     {
                         0 => new Admin(username, password, email, phoneNumber, address, userRoleLevel),
-                        1 => new HomeOwner(username, password, email, phoneNumber, address, userRoleLevel),
-                        2 => new Tenant(username, password, email, phoneNumber, address, userRoleLevel),
+                        2 => new HomeOwner(username, password, email, phoneNumber, address, userRoleLevel),
+                        1 => new Tenant(username, password, email, phoneNumber, address, userRoleLevel),
                         _ => throw new Exception("Invalid user role!")
                     };
                     user.UserId = (int)new SqlCommand("SELECT max(UserId) from tblUser", connection).ExecuteScalar();

@@ -53,9 +53,12 @@ namespace TinyHouseBackEnd
             
             */
 
-            AbsUser user = AbsUser.UserFactory.Login("Tarık", "1234");
+            AbsUser user = AbsUser.UserFactory.Login("admin1", "admin123");
             if (user != null)
             {
+                //show loginned userid, username, 
+                Console.WriteLine($"UserId: {user.UserId}, UserName: {user.UserName}");
+
                 if (user.UserRoleLevel == 0)
                 {
                     Console.WriteLine("Admin giriş yaptı.");
@@ -70,16 +73,17 @@ namespace TinyHouseBackEnd
                         //admin.DeleteHouse(4);
                         //admin.MakeActiveHouse(2);
                         //admin.MakePassiveHouse(1);
+                        admin.ListAllResetvations();
                     }
 
                 }
-                else if (user.UserRoleLevel == 1)
+                else if (user.UserRoleLevel == 2)
                 {
                     Console.WriteLine("Ev sahibi giriş yaptı.");
                     
                     if (user is HomeOwner owner)
                     {
-                    
+
                         //owner.addHouse(500, "Adana Merkez", "Merkezde patlayan 3+1", houseAvgStar: 5.2,isAvaiable:true);
                         //owner.makeActiveHouse(1);
                         //owner.makePassiveHouse(2);
@@ -90,11 +94,21 @@ namespace TinyHouseBackEnd
                         //owner.listMyHouse();
                         //owner.listHouseCommands(2); //
 
+                        //owner.ListWaitingReservation();
+                        //owner.ConfirmReservation(8);
+                        //owner.ListWaitingReservation();
+                        //owner.RejectReservation(9);
+                        //owner.ListWaitingReservation();
+                        //owner.ListAllReservationForHouse(3);
+                        //owner.ListAllReservationForHouse(4);
+
+
+
                     }
-                    
+
 
                 }
-                else if (user.UserRoleLevel == 2)
+                else if (user.UserRoleLevel == 1)
                 {
                     Console.WriteLine("Kiracı giriş yaptı.");
                     if (user is Tenant tenant) 
@@ -110,6 +124,15 @@ namespace TinyHouseBackEnd
                         //tenant.listAvailableHouses();
                         //tenant.RentHouse(6);
                         //tenant.AddComment(6, "Bornovada olması Güzeldi", 88);
+                        
+                        //tenant.ListAvailableHouses();
+                        //tenant.MakeReservations(3, DateTime.Now, DateTime.Now.AddDays(7));
+                        //tenant.MakeReservations(4, DateTime.Now, DateTime.Now.AddDays(7));
+                        
+                        //tenant.ListMyReservations();
+                        //tenant.ListAvailableHouses();
+
+                        //tenant.CancelMyReservation(3);
 
                     }
 

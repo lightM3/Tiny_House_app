@@ -22,7 +22,7 @@ namespace TinyHouseBackEnd.UserPackage
             using (SqlConnection connection = new SqlConnection(connectionString)) 
             {
 
-                string checkQuery = "SELECT COUNT(*) FROM tblUser WHERE UserName = @username";
+                string checkQuery = "select COUNT(*) from tblUser WHERE UserName = @username";
                 SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
                 checkCommand.Parameters.AddWithValue("@username", userName);
                 connection.Open();
@@ -59,7 +59,7 @@ namespace TinyHouseBackEnd.UserPackage
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "DELETE FROM tblUser WHERE UserId = @userid";
+                string query = "delete from tblUser where UserId = @userid";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userid", userid);
                 connection.Open();
@@ -77,7 +77,7 @@ namespace TinyHouseBackEnd.UserPackage
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE tblUser SET UserName = @newUserName, Password = @newPassword, Email = @newEmail, PhoneNumber = @newPhoneNumber, Address = @newAddress WHERE UserId = @userid";
+                string query = "update tblUser set UserName = @newUserName, Password = @newPassword, Email = @newEmail, PhoneNumber = @newPhoneNumber, Address = @newAddress where UserId = @userid";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userid", userid);
                 command.Parameters.AddWithValue("@newUserName", newUserName);
@@ -101,7 +101,7 @@ namespace TinyHouseBackEnd.UserPackage
         {
             using (SqlConnection connection = new SqlConnection(connectionString)) 
             {
-                string query = "UPDATE tblUser SET IsAccountActive = 0 WHERE UserId = @userid";
+                string query = "update tblUser set IsAccountActive = 0 where UserId = @userid";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userid", userid);
                 connection.Open();
@@ -120,7 +120,7 @@ namespace TinyHouseBackEnd.UserPackage
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "UPDATE tblUser SET IsAccountActive = 1 WHERE UserId = @userid";
+                string query = "update tblUser set IsAccountActive = 1 where UserId = @userid";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userid", userid);
                 connection.Open();
@@ -142,7 +142,7 @@ namespace TinyHouseBackEnd.UserPackage
                 if (this.UserRoleLevel == 0)
                 {
 
-                    string query = "DELETE FROM tblHouse WHERE HouseId = @houseid";
+                    string query = "delete from tblHouse where HouseId = @houseid";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@houseid", houseid);
                     connection.Open();
@@ -154,7 +154,7 @@ namespace TinyHouseBackEnd.UserPackage
                     }
                     Console.WriteLine("House was deleted successfully.");
                     // Delete this house's comments
-                    string query2 = "DELETE FROM tblComment WHERE HouseId = @houseid";
+                    string query2 = "delete from tblComment where HouseId = @houseid";
                     SqlCommand command2 = new SqlCommand(query2, connection);
                     command2.Parameters.AddWithValue("@houseid", houseid);
                     rowsAffected =  command2.ExecuteNonQuery();
@@ -182,7 +182,7 @@ namespace TinyHouseBackEnd.UserPackage
                 if (this.UserRoleLevel == 0)
                 {
                     connection.Open();
-                    string query = @"UPDATE tblHouse SET IsAvailable = 0, WhoRent = NULL, IsHouseActive = 0 WHERE HouseId = @houseid";
+                    string query = "update tblHouse set IsAvailable = 0, WhoRent = NULL, IsHouseActive = 0 where HouseId = @houseid";
 
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@houseid", houseid);
@@ -207,7 +207,7 @@ namespace TinyHouseBackEnd.UserPackage
                 if (this.UserRoleLevel == 0)
                 {
                     connection.Open();
-                    string query = @"UPDATE tblHouse SET IsAvailable = 1, IsHouseActive = 1 WHERE HouseId = @houseid"; 
+                    string query = "update tblHouse set IsAvailable = 1, IsHouseActive = 1 where HouseId = @houseid"; 
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@houseid", houseid);
                     int rowsAffected = command.ExecuteNonQuery();
@@ -222,6 +222,34 @@ namespace TinyHouseBackEnd.UserPackage
                     }
                 }
             }
+        }
+
+
+        //Admin reservation management
+
+        public void ListAllResetvations()
+        {
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+
+                //Cheching if the user is admin
+                if (this.UserRoleLevel != 0)
+                {
+                    Console.WriteLine("Access Denied. You are not Admin.");
+                    return;
+                }
+
+                string query = "select * from tblReservation";
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"ReservationId: {reader["ReservationId"]}, HouseId: {reader["HouseId"]}, TenantId: {reader["TenantId"]}, StartDate: {reader["StartDate"]}, EndDate: {reader["EndDate"]}, Reservation Status : {reader["ReservationStatus"]}");
+                }
+            }
+
         }
 
     }
