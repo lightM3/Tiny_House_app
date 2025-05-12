@@ -97,33 +97,80 @@ namespace TinyHouseBackEnd.UserPackage
             }
         }
 
-        public void MakePassiveAccount(int userid) 
+        public void MakeUserPassiveBetweenDates(int userid, DateTime startDate, DateTime endDate)
         {
-            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "update tblUser set IsAccountActive = 0 where UserId = @userid";
+                if (this.UserRoleLevel != 0)
+                {
+                    Console.WriteLine("Access Denied. You are not Admin.");
+                    return;
+                }
+                // check for user allreadt passive
+                string checkQuery = "select COUNT(*) from tblUser where UserId = @userid and IsAccountActive = 0";
+                SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+                checkCommand.Parameters.AddWithValue("@userid", userid);
+                connection.Open();
+                int userExists = (int)checkCommand.ExecuteScalar();
+                if (userExists > 0)
+                {
+                    Console.WriteLine("This user is already passive.");
+                    return;
+                }
+
+
+                //set isaccount active to 0
+                string checkQuery2 = "update tblUser set IsAccountActive = 0 where UserId = @userid";
+                SqlCommand checkCommand2 = new SqlCommand(checkQuery2, connection);
+                checkCommand2.Parameters.AddWithValue("@userid", userid);
+                
+                string query = " update tblUser set IsAccountActive = 0, UserPassiveStartDate = @startDate, UserPassiveEndDate = @endDate where UserId = @userid";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userid", userid);
-                connection.Open();
+                command.Parameters.AddWithValue("@startDate", startDate);
+                command.Parameters.AddWithValue("@endDate", endDate);
+
                 int rowsAffected = command.ExecuteNonQuery();
+                
                 if (rowsAffected == 0)
                 {
                     Console.WriteLine("Making account passive operation was failed.");
                     return;
                 }
-                Console.WriteLine("User was made passive successfully.");        
+                else
+                { 
+                    Console.WriteLine($"User {userid} was made passive successfully.");
+                    return;
+                }
             }
-
         }
+
 
         public void MakeActiveAccount(int userid) 
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "update tblUser set IsAccountActive = 1 where UserId = @userid";
+                if (this.UserRoleLevel != 0)
+                {
+                    Console.WriteLine("Access Denied. You are not Admin.");
+                    return;
+                }
+                // check for user allreadt active
+                string checkQuery = "select COUNT(*) from tblUser where UserId = @userid and IsAccountActive = 1";
+                SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+                checkCommand.Parameters.AddWithValue("@userid", userid);
+                connection.Open();
+                int userExists = (int)checkCommand.ExecuteScalar();
+                if (userExists > 0)
+                {
+                    Console.WriteLine("This user is already active.");
+                    return;
+                }
+
+
+                string query = "update tblUser set IsAccountActive = 1, UserPassiveStartDate = NULL, UserPassiveEndDate = NULL where UserId = @userid";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userid", userid);
-                connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
                 if (rowsAffected == 0)
                 {
@@ -251,6 +298,99 @@ namespace TinyHouseBackEnd.UserPackage
             }
 
         }
+
+        public void RejectReservation(int reservationId)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                if (this.UserRoleLevel != 0)
+                {
+                    Console.WriteLine("Access Denied. You are not Admin.");
+                    return;
+                }
+
+                string query = "update tblReservation set ReservationStatus = 0 where ReservationId = @reservationId";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@reservationId", reservationId);
+                connection.Open();
+                int rowsAffected = command.ExecuteNonQuery();
+                if (rowsAffected == 0)
+                {
+                    Console.WriteLine("Rejection operation was failed.");
+                    return;
+                }
+                Console.WriteLine("Reservation was rejected successfully.");
+            }
+        }
+
+
+        // List Payments
+
+        public void ListAllPayments()
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //Cheching if the user is admin
+                if (this.UserRoleLevel != 0)
+                {
+                    Console.WriteLine("Access Denied. You are not Admin.");
+                    return;
+                }
+                string query = "select * from tblPayment";
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"PaymentId: {reader["PaymentId"]}, ReservationId: {reader["ReservationId"]}, Amount: {reader["Amount"]}, PaymentDate: {reader["PaymentDate"]}, PaymentStatus: {reader["PaymentStatus"]}, PaymentMethod: {reader["PaymentMethod"]}");
+                }
+            }
+        }
+
+        public void ListAllPaymentByUser(int userid)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //Cheching if the user is admin
+                if (this.UserRoleLevel != 0)
+                {
+                    Console.WriteLine("Access Denied. You are not Admin.");
+                    return;
+                }
+                string query = "select * from tblPayment where UserId = @userid";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@userid", userid);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"PaymentId: {reader["PaymentId"]}, ReservationId: {reader["ReservationId"]}, Amount: {reader["Amount"]}, PaymentDate: {reader["PaymentDate"]}, PaymentStatus: {reader["PaymentStatus"]}, PaymentMethod: {reader["PaymentMethod"]}");
+                }
+            }
+        }
+
+        public void ListAllPaymentsByHouse(int houseid)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                //Cheching if the user is admin
+                if (this.UserRoleLevel != 0)
+                {
+                    Console.WriteLine("Access Denied. You are not Admin.");
+                    return;
+                }
+                string query = "select * from tblPayment where HouseId = @houseid";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@houseid", houseid);
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    Console.WriteLine($"PaymentId: {reader["PaymentId"]}, ReservationId: {reader["ReservationId"]}, Amount: {reader["Amount"]}, PaymentDate: {reader["PaymentDate"]}, PaymentStatus: {reader["PaymentStatus"]}, PaymentMethod: {reader["PaymentMethod"]}");
+                }
+            }
+        }
+
 
     }
 

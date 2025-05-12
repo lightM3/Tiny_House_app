@@ -270,5 +270,55 @@ namespace TinyHouseBackEnd.UserPackage
             }
         }
 
+
+        // Payment Operations
+
+        public void MakePayment(int reservationId, decimal paidAmount, string paymentMethod)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                //get House Price (BİLMİYORUM YARDIM ALDIM)
+                string PriceQuery = @" SELECT h.Price FROM tblReservation r JOIN tblHouse h ON r.HouseId = h.HouseId WHERE r.ReservationId = @reservationId";
+
+                SqlCommand Command = new SqlCommand(PriceQuery, connection);
+                Command.Parameters.AddWithValue("@reservationId", reservationId);
+                object result = Command.ExecuteScalar();
+
+                if (result == null)
+                {
+                    Console.WriteLine("Reservation or related house not found.");
+                    return;
+                }
+
+                decimal housePrice = Convert.ToDecimal(result);
+
+                // check if the payment amount is equal to the house price
+                string paymentStatus = paidAmount == housePrice ? "Successful" : "Failed";
+
+                
+                string insertQuery = @" INSERT INTO tblPayment (ReservationId, Amount, PaymentDate, PaymentStatus, PaymentMethod) VALUES (@reservationId, @amount, GETDATE(), @status, @method)";
+
+                SqlCommand insertCommand = new SqlCommand(insertQuery, connection);
+                insertCommand.Parameters.AddWithValue("@reservationId", reservationId);
+                insertCommand.Parameters.AddWithValue("@amount", paidAmount);
+                insertCommand.Parameters.AddWithValue("@status", paymentStatus);
+                insertCommand.Parameters.AddWithValue("@method", paymentMethod);
+
+                int rowsAffected = insertCommand.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine($"Payment {paymentStatus} for Reservation {reservationId}.");
+                }
+                else
+                {
+                    Console.WriteLine("Payment failed to insert.");
+                }
+            }
+        }
+
+
     }
 }

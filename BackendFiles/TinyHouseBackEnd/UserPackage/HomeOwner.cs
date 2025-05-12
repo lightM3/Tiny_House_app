@@ -79,27 +79,48 @@ namespace TinyHouseBackEnd.UserPackage
             }
         }
 
-        public bool MakePassiveHouse(int houseid)
+        public bool MakePassiveHouse(int houseid, DateTime startDate, DateTime endDate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "update tblHouse set IsAvailable = @falseParameter where HouseId = @houseid and UserId = @userid";
+
+                //check for this house is already passive
+                string checkQuery = "select IsAvailable from tblHouse where HouseId = @houseid and UserId = @userid";
+                SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+                checkCommand.Parameters.AddWithValue("@houseid", houseid);
+                checkCommand.Parameters.AddWithValue("@userid", this.UserId);
+                connection.Open();
+                SqlDataReader reader = checkCommand.ExecuteReader();
+                if (reader.Read())
+                {
+                    bool isAvailable = Convert.ToBoolean(reader["IsAvailable"]);
+                    if (!isAvailable)
+                    {
+                        Console.WriteLine("House is already passive.");
+                        return false;
+                    }
+                }
+                reader.Close();
+
+                //Update the house to passive
+
+                string query = "update tblHouse set IsAvailable = 0, WhoRent = NULL PassiveStartDate = @startDate, PassiveEndDate = @endDate where HouseId = @houseid and UserId = @userid";
                 SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@falseParameter", 0);
+                command.Parameters.AddWithValue("@startDate", startDate);
+                command.Parameters.AddWithValue("@endDate", endDate);
                 command.Parameters.AddWithValue("@houseid", houseid);
                 command.Parameters.AddWithValue("@userid", this.UserId);
 
-                connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
 
                 if (rowsAffected > 0)
                 {
-                    Console.WriteLine("House status setted 0 successfully.");
+                    Console.WriteLine("House set to passive between given dates successfully.");
                     return true;
                 }
                 else
                 {
-                    Console.WriteLine("House status operation failed.");
+                    Console.WriteLine("Failed to set house to passive.");
                     return false;
                 }
             }
@@ -240,12 +261,14 @@ namespace TinyHouseBackEnd.UserPackage
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = @"select * from tblReservation where HouseId IN ( select HouseId from tblHouse where UserId = @userId) and ReservationStatus = 'Pending'";
+                connection.Open();
+
+                // check (YARDİM ALDIM)
+                string query = @" SELECT r.ReservationId, r.HouseId, r.TenantId, r.ReservationStatus, p.PaymentStatus FROM tblReservation r INNER JOIN tblHouse h ON r.HouseId = h.HouseId LEFT JOIN tblPayment p ON r.ReservationId = p.ReservationId WHERE h.UserId = @userId AND r.ReservationStatus = 'Pending'";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@userId", this.UserId);
 
-                connection.Open();
                 SqlDataReader reader = command.ExecuteReader();
 
                 if (!reader.HasRows)
@@ -254,9 +277,11 @@ namespace TinyHouseBackEnd.UserPackage
                     return;
                 }
 
+                Console.WriteLine("Pending reservations:");
                 while (reader.Read())
                 {
-                    Console.WriteLine($"Reservation ID: {reader["ReservationId"]}, House ID: {reader["HouseId"]}, Tenant ID: {reader["TenantId"]}, Status: {reader["ReservationStatus"]}");
+                    string paymentStatus = reader["PaymentStatus"] == DBNull.Value ? "No Payment" : reader["PaymentStatus"].ToString();
+                    Console.WriteLine($"Reservation ID: {reader["ReservationId"]}, House ID: {reader["HouseId"]}, Tenant ID: {reader["TenantId"]}, Status: {reader["ReservationStatus"]}, Payment Status: {paymentStatus}");
                 }
             }
         }

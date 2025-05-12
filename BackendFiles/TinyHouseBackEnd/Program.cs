@@ -53,7 +53,7 @@ namespace TinyHouseBackEnd
             
             */
 
-            AbsUser user = AbsUser.UserFactory.Login("admin1", "admin123");
+            AbsUser user = AbsUser.UserFactory.Login("owner1", "owner123");
             if (user != null)
             {
                 //show loginned userid, username, 
@@ -73,7 +73,12 @@ namespace TinyHouseBackEnd
                         //admin.DeleteHouse(4);
                         //admin.MakeActiveHouse(2);
                         //admin.MakePassiveHouse(1);
-                        admin.ListAllResetvations();
+                        //admin.ListAllResetvations();
+
+                        //admin.ListAllPayments();
+
+                        //admin.MakeUserPassiveBetweenDates(1, DateTime.Now, DateTime.Now.AddDays(10));
+                        //admin.MakeActiveAccount(1);
                     }
 
                 }
@@ -102,6 +107,8 @@ namespace TinyHouseBackEnd
                         //owner.ListAllReservationForHouse(3);
                         //owner.ListAllReservationForHouse(4);
 
+                        owner.ListWaitingReservation();
+
 
 
                     }
@@ -124,15 +131,17 @@ namespace TinyHouseBackEnd
                         //tenant.listAvailableHouses();
                         //tenant.RentHouse(6);
                         //tenant.AddComment(6, "Bornovada olması Güzeldi", 88);
-                        
+
                         //tenant.ListAvailableHouses();
-                        //tenant.MakeReservations(3, DateTime.Now, DateTime.Now.AddDays(7));
+                        //tenant.MakeReservations(1, DateTime.Now, DateTime.Now.AddDays(7));
                         //tenant.MakeReservations(4, DateTime.Now, DateTime.Now.AddDays(7));
-                        
+
                         //tenant.ListMyReservations();
                         //tenant.ListAvailableHouses();
 
                         //tenant.CancelMyReservation(3);
+
+                        //tenant.MakePayment(10, 750, "DEbid Card");
 
                     }
 
