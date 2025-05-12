@@ -72,10 +72,15 @@ Bu proje, kullanıcıların tiny house tarzı konaklamaları görüntüleyip rez
 ![Ekran görüntüsü 2025-04-29 190502](https://github.com/user-attachments/assets/14d20daa-5e38-4a92-bb49-e9753b9c125e)
 -
 ![Ekran görüntüsü 2025-04-29 190606](https://github.com/user-attachments/assets/bd22e41d-8310-4f34-b2f7-6973b89bf080)
+-
+- [x] DataBase ER Diagram-
+![ER_Diagram_TinyHouseDb](https://github.com/user-attachments/assets/261ae3f7-29c1-4357-9d23-296f254d203b)
+-
 
 ---
 
 ## 🛠 Kurulum
+
 
 ```bash
 # Flutter için
