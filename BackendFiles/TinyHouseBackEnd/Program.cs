@@ -53,7 +53,7 @@ namespace TinyHouseBackEnd
             
             */
 
-            AbsUser user = AbsUser.UserFactory.Login("owner1", "owner123");
+            AbsUser user = AbsUser.UserFactory.Login("owner3", "owner123");
             if (user != null)
             {
                 //show loginned userid, username, 
@@ -67,12 +67,12 @@ namespace TinyHouseBackEnd
 
                         //admin.AddNewAccount("Hadise", "HadiseSifre", "Hadise@mail.com", "+905552229944", "İzmir Gaziemir, Turkey", 1);
                         //admin.DeleteAccount(17);
-                        //admin.MakePassiveAccount(18);
+                        //admin.MakePassiveAccount(4);
                         //admin.MakeActiveAccount(18);
                         //admin.UpdateAccount(18, "Aleyna", "AleynaSifre", "Aleyna@mail.com", "+905556667788", "Iğdır, Turkey");
                         //admin.DeleteHouse(4);
                         //admin.MakeActiveHouse(2);
-                        //admin.MakePassiveHouse(1);
+                        //admin.MakePassiveHouse(4);
                         //admin.ListAllResetvations();
 
                         //admin.ListAllPayments();
@@ -91,23 +91,23 @@ namespace TinyHouseBackEnd
 
                         //owner.addHouse(500, "Adana Merkez", "Merkezde patlayan 3+1", houseAvgStar: 5.2,isAvaiable:true);
                         //owner.makeActiveHouse(1);
-                        //owner.makePassiveHouse(2);
+                        //owner.MakePassiveHouse(3,DateTime.Now,DateTime.Now.AddDays(2));
                         //owner.listMyHouse();
-                        //owner.listHouseCommands(1);
+                        //owner.ListHouseCommands(3);
                         //owner.updateHousePrice(4, 250);
                         //owner.unAddHouse(3);
                         //owner.listMyHouse();
                         //owner.listHouseCommands(2); //
 
                         //owner.ListWaitingReservation();
-                        //owner.ConfirmReservation(8);
+                        //owner.ConfirmReservation(11);
                         //owner.ListWaitingReservation();
                         //owner.RejectReservation(9);
                         //owner.ListWaitingReservation();
                         //owner.ListAllReservationForHouse(3);
                         //owner.ListAllReservationForHouse(4);
 
-                        owner.ListWaitingReservation();
+                        //owner.ListWaitingReservation();
 
 
 
@@ -125,7 +125,7 @@ namespace TinyHouseBackEnd
                         //tenant.RentHouse(4);
                         //tenant.UnRentHouse(4);
                         //tenant.listAvailableHouses();
-                        //tenant.RentHouse(4);
+                        //tenant.RentHouse(5);
                         //tenant.listAvailableHouses();
                         //tenant.AddComment(4, "Tekrar geldim yine memnun kaldım Çok iyi bir Ev :)", 3);
                         //tenant.listAvailableHouses();
@@ -133,7 +133,7 @@ namespace TinyHouseBackEnd
                         //tenant.AddComment(6, "Bornovada olması Güzeldi", 88);
 
                         //tenant.ListAvailableHouses();
-                        //tenant.MakeReservations(1, DateTime.Now, DateTime.Now.AddDays(7));
+                        //tenant.MakeReservations(6, DateTime.Now, DateTime.Now.AddDays(7));
                         //tenant.MakeReservations(4, DateTime.Now, DateTime.Now.AddDays(7));
 
                         //tenant.ListMyReservations();
@@ -141,7 +141,7 @@ namespace TinyHouseBackEnd
 
                         //tenant.CancelMyReservation(3);
 
-                        //tenant.MakePayment(10, 750, "DEbid Card");
+                        //tenant.MakePayment(10, 750, "Debid Card");
 
                     }
 

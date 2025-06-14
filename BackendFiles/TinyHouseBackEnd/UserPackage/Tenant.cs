@@ -66,34 +66,35 @@ namespace TinyHouseBackEnd.UserPackage
 
         public void RentHouse(int houseId)
         {
-
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                //Check before renting for is available = 1 ?
-                string checkQuery = "select COUNT(*) from tblHouse where HouseId = @houseId and IsAvailable = 1";
+                string checkQuery = "SELECT dbo.fn_IsHouseAvailable(@houseId)";
                 SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
                 checkCommand.Parameters.AddWithValue("@houseId", houseId);
+
                 connection.Open();
-                int count = (int)checkCommand.ExecuteScalar();
-                if (count == 0)
+                bool isAvailable = Convert.ToBoolean(checkCommand.ExecuteScalar());
+
+                if (!isAvailable)
                 {
                     Console.WriteLine("House is not available for rent.");
                     return;
                 }
 
-                string query = "update tblHouse set IsAvailable = 0,WhoRent = @userid where HouseId = @houseId";
+                string query = "UPDATE tblHouse SET IsAvailable = 0, WhoRent = @userid WHERE HouseId = @houseId";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@houseId", houseId);
                 command.Parameters.AddWithValue("@userid", this.UserId);
+
                 int rowsAffected = command.ExecuteNonQuery();
+
                 if (rowsAffected > 0)
                 {
                     Console.WriteLine("House rented successfully.");
-                    return;
                 }
             }
-
         }
+
 
         public void UnRentHouse(int houseId)
         {
@@ -151,56 +152,54 @@ namespace TinyHouseBackEnd.UserPackage
 
         //Reservation Operations
 
-        public void MakeReservations(int houseid,DateTime startDate, DateTime endDate)
+        public void MakeReservations(int houseid, DateTime startDate, DateTime endDate)
         {
-
-            using (SqlConnection connection = new SqlConnection(connectionString)) 
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                //Check if the house is available
-                string checkQuery = "select COUNT(*) from tblHouse where HouseId = @houseId and IsAvailable = 1";
-                SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
-                checkCommand.Parameters.AddWithValue("@houseId", houseid);
                 connection.Open();
-                int count = (int)checkCommand.ExecuteScalar();
-                if (count == 0)
+
+                
+                string checkHouseQuery = "SELECT dbo.fn_IsHouseAvailable(@houseId)";
+                SqlCommand checkHouseCmd = new SqlCommand(checkHouseQuery, connection);
+                checkHouseCmd.Parameters.AddWithValue("@houseId", houseid);
+                bool isHouseAvailable = Convert.ToBoolean(checkHouseCmd.ExecuteScalar());
+
+                if (!isHouseAvailable)
                 {
                     Console.WriteLine("House is not available for reservation.");
                     return;
                 }
-                //Check if the reservation dates are valid
-                string checkDateQuery = "select COUNT(*) from tblReservation where HouseId = @houseId and ((StartDate <= @endDate and EndDate >= @startDate) or (StartDate >= @startDate and StartDate <= @endDate))";
-                SqlCommand checkDateCommand = new SqlCommand(checkDateQuery, connection);
-                checkDateCommand.Parameters.AddWithValue("@houseId", houseid);
-                checkDateCommand.Parameters.AddWithValue("@startDate", startDate);
-                checkDateCommand.Parameters.AddWithValue("@endDate", endDate);
-                int dateCount = (int)checkDateCommand.ExecuteScalar();
-                if (dateCount > 0)
+
+                string checkDateQuery = "SELECT dbo.fn_IsReservationDateAvailable(@houseId, @startDate, @endDate)";
+                SqlCommand checkDateCmd = new SqlCommand(checkDateQuery, connection);
+                checkDateCmd.Parameters.AddWithValue("@houseId", houseid);
+                checkDateCmd.Parameters.AddWithValue("@startDate", startDate);
+                checkDateCmd.Parameters.AddWithValue("@endDate", endDate);
+                bool isDateAvailable = Convert.ToBoolean(checkDateCmd.ExecuteScalar());
+
+                if (!isDateAvailable)
                 {
                     Console.WriteLine("House is not available for the selected dates.");
                     return;
                 }
 
-                //Set the house as unavailable from tblHouse
-                string updateHouseQuery = "update tblHouse set IsAvailable = 0,WhoRent = @whorent where HouseId = @houseId";
+                string updateHouseQuery = "UPDATE tblHouse SET IsAvailable = 0, WhoRent = @whorent WHERE HouseId = @houseId";
                 SqlCommand updateHouseCommand = new SqlCommand(updateHouseQuery, connection);
                 updateHouseCommand.Parameters.AddWithValue("@houseId", houseid);
                 updateHouseCommand.Parameters.AddWithValue("@whorent", this.UserId);
                 updateHouseCommand.ExecuteNonQuery();
 
-                //Insert the reservation into the database
+                string insertQuery = "INSERT INTO tblReservation (HouseId, TenantId, StartDate, EndDate, ReservationStatus, CreatedAt) " +
+                                     "VALUES (@houseId, @userId, @startDate, @endDate, @status, @createdAt)";
+                SqlCommand insertCommand = new SqlCommand(insertQuery, connection);
+                insertCommand.Parameters.AddWithValue("@houseId", houseid);
+                insertCommand.Parameters.AddWithValue("@userId", this.UserId);
+                insertCommand.Parameters.AddWithValue("@startDate", startDate);
+                insertCommand.Parameters.AddWithValue("@endDate", endDate);
+                insertCommand.Parameters.AddWithValue("@status", "Pending");
+                insertCommand.Parameters.AddWithValue("@createdAt", DateTime.Now);
 
-                string query = "INSERT INTO tblReservation (HouseId, TenantId, StartDate, EndDate, ReservationStatus, CreatedAt) VALUES (@houseId, @userId, @startDate, @endDate, @status, @createdAt)";
-
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@houseId", houseid);
-                command.Parameters.AddWithValue("@userId", this.UserId);
-                command.Parameters.AddWithValue("@startDate", startDate);
-                command.Parameters.AddWithValue("@endDate", endDate);
-                command.Parameters.AddWithValue("@status", "Pending");
-                command.Parameters.AddWithValue("@createdAt", DateTime.Now); 
-
-                
-                int rowsAffected = command.ExecuteNonQuery();
+                int rowsAffected = insertCommand.ExecuteNonQuery();
 
                 if (rowsAffected > 0)
                 {
@@ -211,8 +210,8 @@ namespace TinyHouseBackEnd.UserPackage
                     Console.WriteLine("Reservation failed.");
                 }
             }
-
         }
+
 
         public void ListMyReservations() 
         {

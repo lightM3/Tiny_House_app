@@ -1,12 +1,13 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
-using Microsoft.Data.SqlClient;
+using System.ComponentModel.Design;
+using System.Data;
+using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net;
-using System.Diagnostics;
-using System.ComponentModel.Design;
 
 namespace TinyHouseBackEnd.UserPackage
 {
@@ -83,48 +84,45 @@ namespace TinyHouseBackEnd.UserPackage
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                SqlCommand command = new SqlCommand("sp_MakeHousePassive", connection);
+                command.CommandType = CommandType.StoredProcedure;
 
-                //check for this house is already passive
-                string checkQuery = "select IsAvailable from tblHouse where HouseId = @houseid and UserId = @userid";
-                SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
-                checkCommand.Parameters.AddWithValue("@houseid", houseid);
-                checkCommand.Parameters.AddWithValue("@userid", this.UserId);
-                connection.Open();
-                SqlDataReader reader = checkCommand.ExecuteReader();
-                if (reader.Read())
-                {
-                    bool isAvailable = Convert.ToBoolean(reader["IsAvailable"]);
-                    if (!isAvailable)
-                    {
-                        Console.WriteLine("House is already passive.");
-                        return false;
-                    }
-                }
-                reader.Close();
-
-                //Update the house to passive
-
-                string query = "update tblHouse set IsAvailable = 0, WhoRent = NULL PassiveStartDate = @startDate, PassiveEndDate = @endDate where HouseId = @houseid and UserId = @userid";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@startDate", startDate);
-                command.Parameters.AddWithValue("@endDate", endDate);
                 command.Parameters.AddWithValue("@houseid", houseid);
                 command.Parameters.AddWithValue("@userid", this.UserId);
+                command.Parameters.AddWithValue("@startDate", startDate);
+                command.Parameters.AddWithValue("@endDate", endDate);
 
-                int rowsAffected = command.ExecuteNonQuery();
+                SqlParameter returnParameter = new SqlParameter();
+                returnParameter.Direction = ParameterDirection.ReturnValue;
+                command.Parameters.Add(returnParameter);
 
-                if (rowsAffected > 0)
+                connection.Open();
+                command.ExecuteNonQuery();
+
+                int result = (int)returnParameter.Value;
+
+                if (result == 1)
                 {
                     Console.WriteLine("House set to passive between given dates successfully.");
                     return true;
                 }
+                else if (result == -2)
+                {
+                    Console.WriteLine("House is already passive.");
+                }
+                else if (result == -1)
+                {
+                    Console.WriteLine("House not found.");
+                }
                 else
                 {
-                    Console.WriteLine("Failed to set house to passive.");
-                    return false;
+                    Console.WriteLine("Unknown error.");
                 }
+
+                return false;
             }
         }
+
 
         public bool MakeActiveHouse(int houseid)
         {
@@ -191,23 +189,20 @@ namespace TinyHouseBackEnd.UserPackage
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string ownerCheckQuery = "select UserId from tblHouse where HouseId = @houseid";
-                SqlCommand ownerCheckCommand = new SqlCommand(ownerCheckQuery, connection);
-                ownerCheckCommand.Parameters.AddWithValue("@houseid", houseid);
+                SqlCommand command = new SqlCommand("sp_ListHouseComments", connection);
+                command.CommandType = CommandType.StoredProcedure;
+
+                command.Parameters.AddWithValue("@houseid", houseid);
+                command.Parameters.AddWithValue("@userid", this.UserId);
+
+                SqlParameter returnParameter = new SqlParameter();
+                returnParameter.Direction = ParameterDirection.ReturnValue;
+                command.Parameters.Add(returnParameter);
+
                 connection.Open();
-                int ownerId = (int)ownerCheckCommand.ExecuteScalar();
 
-                if (ownerId != this.UserId)
-                {
-                    Console.WriteLine("Access denied! You are not the owner of this house.");
-                    return;
-                }
+                SqlDataReader reader = command.ExecuteReader();
 
-                string query = "select * from tblComment where HouseId = @houseid";
-                SqlCommand sqlCommand = new SqlCommand(query, connection);
-                sqlCommand.Parameters.AddWithValue("@houseid", houseid);
-
-                SqlDataReader reader = sqlCommand.ExecuteReader();
                 while (reader.Read())
                 {
                     string commentid = reader["CommentId"].ToString();
@@ -216,19 +211,29 @@ namespace TinyHouseBackEnd.UserPackage
                     double star = Convert.ToDouble(reader["Star"]);
 
                     Console.WriteLine("-----------------------------------------");
-
                     Console.WriteLine($"HomeOwner Id: {this.UserId} \n" +
-                    $"Comment Id.: {commentid} \n" +
-                    $"Commenter's Id: {userid} \n" +
-                    $"Comment Content:  {content} \n" +
-                    $"Comment Star:  {star} \n");
-
+                                      $"Comment Id.: {commentid} \n" +
+                                      $"Commenter's Id: {userid} \n" +
+                                      $"Comment Content:  {content} \n" +
+                                      $"Comment Star:  {star} \n");
                     Console.WriteLine("-----------------------------------------");
                 }
 
-            }
+                reader.Close();
 
+                int result = (int)returnParameter.Value;
+
+                if (result == -1)
+                {
+                    Console.WriteLine("House not found.");
+                }
+                else if (result == -2)
+                {
+                    Console.WriteLine("Access denied! You are not the owner of this house.");
+                }
+            }
         }
+
 
         public void UpdateHousePrice(int houseid, int newPrice)
         {
