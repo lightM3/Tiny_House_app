@@ -2,21 +2,67 @@ import 'package:flutter/material.dart';
 
 class AdminPaymentManagementPage extends StatefulWidget {
   @override
-  _AdminPaymentManagementPageState createState() => _AdminPaymentManagementPageState();
+  _AdminPaymentManagementPageState createState() =>
+      _AdminPaymentManagementPageState();
 }
 
-class _AdminPaymentManagementPageState extends State<AdminPaymentManagementPage> {
+class _AdminPaymentManagementPageState
+    extends State<AdminPaymentManagementPage> {
   List<Map<String, dynamic>> payments = [
-    {'user': 'Ali Yılmaz', 'amount': '₺1500', 'date': '10 Mayıs 2024', 'status': 'Tamamlandı', 'method': 'Kredi Kartı'},
-    {'user': 'Ayşe Kaya', 'amount': '₺1200', 'date': '15 Haziran 2024', 'status': 'Beklemede', 'method': 'Banka Havalesi'},
-    {'user': 'Mehmet Demir', 'amount': '₺1800', 'date': '5 Temmuz 2024', 'status': 'İptal Edildi', 'method': 'PayPal'},
+    {
+      'user': 'tenant2',
+      'amount': '₺1800',
+      'date': '05 Temmuz 2025',
+      'status': 'Beklemede',
+      'method': 'Kredi Kartı',
+    },
+    {
+      'user': 'tenant1',
+      'amount': '₺1900',
+      'date': '05 Temmuz 2025',
+      'status': 'Iptal Edildi',
+      'method': 'Banka Havalesi',
+    },
+    {
+      'user': 'tenant3',
+      'amount': '₺1400',
+      'date': '05 Temmuz 2025',
+      'status': 'Ödendi',
+      'method': 'Kredi Kartı',
+    },
+    {
+      'user': 'tenant1',
+      'amount': '₺2000',
+      'date': '05 Aralık 2025',
+      'status': 'Ödendi',
+      'method': 'Banka Havalesi',
+    },
+    {
+      'user': 'tenant1',
+      'amount': '₺600',
+      'date': '05 Aralık 2025',
+      'status': 'Iptal Edildi',
+      'method': 'Banka Kartı',
+    },
+    {
+      'user': 'tenant2',
+      'amount': '₺650',
+      'date': '05 Aralık 2025',
+      'status': 'Bekleme',
+      'method': 'Kredi Kartı',
+    },
   ];
 
   List<Map<String, dynamic>> filteredPayments = [];
   final TextEditingController searchController = TextEditingController();
   String selectedStatus = 'Tümü';
 
-  final List<String> statusOptions = ['Tümü', 'Tamamlandı', 'Beklemede', 'İptal Edildi'];
+  final List<String> statusOptions = [
+    'Tümü',
+    'Tamamlandı',
+    'Beklemede',
+    'İptal Edildi',
+  ];
 
   @override
   void initState() {
@@ -27,12 +73,16 @@ class _AdminPaymentManagementPageState extends State<AdminPaymentManagementPage>
 
   void _filterPayments() {
     setState(() {
-      filteredPayments = payments.where((payment) {
-        final searchTerm = searchController.text.toLowerCase();
-        final matchesSearch = payment['user']!.toLowerCase().contains(searchTerm);
-        final matchesStatus = selectedStatus == 'Tümü' || payment['status'] == selectedStatus;
-        return matchesSearch && matchesStatus;
-      }).toList();
+      filteredPayments =
+          payments.where((payment) {
+            final searchTerm = searchController.text.toLowerCase();
+            final matchesSearch = payment['user']!.toLowerCase().contains(
+              searchTerm,
+            );
+            final matchesStatus =
+                selectedStatus == 'Tümü' || payment['status'] == selectedStatus;
+            return matchesSearch && matchesStatus;
+          }).toList();
     });
   }
 
@@ -52,33 +102,50 @@ class _AdminPaymentManagementPageState extends State<AdminPaymentManagementPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Ödeme Yönetimi'), backgroundColor: Colors.blueAccent),
+      appBar: AppBar(
+        title: Text('Ödeme Yönetimi'),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
           children: [
             Text(
               'Finansal Durum',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent,
+              ),
             ),
             SizedBox(height: 10),
 
             // 📌 Finansal Özet
             Card(
               elevation: 5,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
               child: Padding(
                 padding: EdgeInsets.all(16),
                 child: Column(
                   children: [
                     Text(
                       'Toplam Gelir: ₺4500',
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.green),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
+                      ),
                     ),
                     SizedBox(height: 5),
                     Text(
                       'Bekleyen Ödemeler: ₺1200',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.orange),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.orange,
+                      ),
                     ),
                   ],
                 ),
@@ -100,16 +167,20 @@ class _AdminPaymentManagementPageState extends State<AdminPaymentManagementPage>
             // 📌 Durum Filtresi
             DropdownButtonFormField(
               value: selectedStatus,
-              items: statusOptions.map((status) {
-                return DropdownMenuItem(value: status, child: Text(status));
-              }).toList(),
+              items:
+                  statusOptions.map((status) {
+                    return DropdownMenuItem(value: status, child: Text(status));
+                  }).toList(),
               onChanged: (value) {
                 setState(() {
                   selectedStatus = value.toString();
                   _filterPayments();
                 });
               },
-              decoration: InputDecoration(labelText: 'Ödeme Durumu', border: OutlineInputBorder()),
+              decoration: InputDecoration(
+                labelText: 'Ödeme Durumu',
+                border: OutlineInputBorder(),
+              ),
             ),
             SizedBox(height: 20),
 
@@ -121,7 +192,9 @@ class _AdminPaymentManagementPageState extends State<AdminPaymentManagementPage>
                   final payment = filteredPayments[index];
 
                   return Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     elevation: 5,
                     margin: EdgeInsets.symmetric(vertical: 10),
                     child: Padding(
@@ -131,7 +204,10 @@ class _AdminPaymentManagementPageState extends State<AdminPaymentManagementPage>
                         children: [
                           Text(
                             '${payment['user']}',
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           SizedBox(height: 5),
                           Text('💰 Tutar: ${payment['amount']}'),
@@ -140,18 +216,27 @@ class _AdminPaymentManagementPageState extends State<AdminPaymentManagementPage>
                           SizedBox(height: 5),
                           Row(
                             children: [
-                              Text('🔵 Durum: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                              Text(
+                                '🔵 Durum: ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 12,
+                                  vertical: 5,
+                                ),
                                 decoration: BoxDecoration(
-                                  color: _getStatusColor(payment['status']).withOpacity(0.2),
+                                  color: _getStatusColor(
+                                    payment['status'],
+                                  ).withOpacity(0.2),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: Text(
                                   payment['status'],
                                   style: TextStyle(
-                                      color: _getStatusColor(payment['status']),
-                                      fontWeight: FontWeight.bold),
+                                    color: _getStatusColor(payment['status']),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ],

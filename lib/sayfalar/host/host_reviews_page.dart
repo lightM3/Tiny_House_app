@@ -7,9 +7,27 @@ class HostReviewsPage extends StatefulWidget {
 
 class _HostReviewsPageState extends State<HostReviewsPage> {
   List<Map<String, dynamic>> reviews = [
-    {'user': 'Ali Yılmaz', 'house': 'Deniz Manzaralı Tiny House', 'rating': 5, 'comment': 'Mükemmel bir deneyimdi!', 'reply': ''},
-    {'user': 'Ayşe Kaya', 'house': 'Orman İçinde Bungalov', 'rating': 4, 'comment': 'Ev çok güzeldi ama biraz soğuktu.', 'reply': ''},
-    {'user': 'Mehmet Demir', 'house': 'Göl Kenarı Küçük Ev', 'rating': 3, 'comment': 'Ev fena değildi, ancak beklediğimden küçüktü.', 'reply': ''},
+    {
+      'user': 'tenant1',
+      'house': 'Orman Içinde Manzaralı Tiny House',
+      'rating': 5,
+      'comment': 'Mükemmel bir deneyimdi!',
+      'reply': 'Teşekkürler yine bekleriz',
+    },
+    {
+      'user': 'tenant3 ',
+      'house': 'Göl Kenarında Sessiz Tiny House',
+      'rating': 4,
+      'comment': 'Ev çok güzeldi ama biraz soğuktu.',
+      'reply': '',
+    },
+    {
+      'user': 'tenant2',
+      'house': 'Minimalist Doğa Evi',
+      'rating': 3,
+      'comment': 'Ev fena değildi, ancak beklediğimden küçüktü.',
+      'reply': '',
+    },
   ];
 
   void _addReply(int index, String reply) {
@@ -19,7 +37,9 @@ class _HostReviewsPageState extends State<HostReviewsPage> {
   }
 
   void _showReplyDialog(int index) {
-    TextEditingController replyController = TextEditingController(text: reviews[index]['reply']);
+    TextEditingController replyController = TextEditingController(
+      text: reviews[index]['reply'],
+    );
 
     showDialog(
       context: context,
@@ -40,7 +60,9 @@ class _HostReviewsPageState extends State<HostReviewsPage> {
                 _addReply(index, replyController.text);
                 Navigator.of(context).pop();
               },
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.blueAccent),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+              ),
               child: Text("Yanıtla"),
             ),
           ],
@@ -52,7 +74,10 @@ class _HostReviewsPageState extends State<HostReviewsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Yorumlar ve Puanlar'), backgroundColor: Colors.blueAccent),
+      appBar: AppBar(
+        title: Text('Yorumlar ve Puanlar'),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: ListView.builder(
@@ -60,7 +85,9 @@ class _HostReviewsPageState extends State<HostReviewsPage> {
           itemBuilder: (context, index) {
             final review = reviews[index];
             return Card(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
               elevation: 5,
               margin: EdgeInsets.symmetric(vertical: 8),
               child: Padding(
@@ -68,15 +95,31 @@ class _HostReviewsPageState extends State<HostReviewsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(review['user'], style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                    Text(
+                      review['user'],
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     SizedBox(height: 5),
-                    Text('🏡 ${review['house']}', style: TextStyle(color: Colors.grey[600])),
+                    Text(
+                      '🏡 ${review['house']}',
+                      style: TextStyle(color: Colors.grey[600]),
+                    ),
                     SizedBox(height: 5),
                     Row(
                       children: [
-                        Text('Puan: ', style: TextStyle(fontWeight: FontWeight.bold)),
+                        Text(
+                          'Puan: ',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
                         Row(
-                          children: List.generate(review['rating'], (index) => Icon(Icons.star, color: Colors.amber, size: 20)),
+                          children: List.generate(
+                            review['rating'],
+                            (index) =>
+                                Icon(Icons.star, color: Colors.amber, size: 20),
+                          ),
                         ),
                       ],
                     ),
@@ -85,8 +128,20 @@ class _HostReviewsPageState extends State<HostReviewsPage> {
                     SizedBox(height: 10),
                     if (review['reply'] != '') ...[
                       Divider(),
-                      Text("Ev Sahibi Yanıtı:", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blueAccent)),
-                      Text(review['reply'], style: TextStyle(fontSize: 16, fontStyle: FontStyle.italic)),
+                      Text(
+                        "Ev Sahibi Yanıtı:",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                      Text(
+                        review['reply'],
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
                     ],
                     SizedBox(height: 10),
                     Align(
@@ -94,10 +149,14 @@ class _HostReviewsPageState extends State<HostReviewsPage> {
                       child: ElevatedButton.icon(
                         onPressed: () => _showReplyDialog(index),
                         icon: Icon(Icons.reply, size: 18, color: Colors.white),
-                        label: Text(review['reply'] == '' ? "Yanıtla" : "Yanıtı Düzenle"),
+                        label: Text(
+                          review['reply'] == '' ? "Yanıtla" : "Yanıtı Düzenle",
+                        ),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blueAccent,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
                       ),
                     ),

@@ -2,15 +2,42 @@ import 'package:flutter/material.dart';
 
 class AdminUserManagementPage extends StatefulWidget {
   @override
-  _AdminUserManagementPageState createState() => _AdminUserManagementPageState();
+  _AdminUserManagementPageState createState() =>
+      _AdminUserManagementPageState();
 }
 
 class _AdminUserManagementPageState extends State<AdminUserManagementPage> {
   final List<Map<String, String>> users = [
-    {'name': 'Ali Yılmaz', 'email': 'ali@mail.com', 'role': 'Ev Sahibi', 'status': 'Aktif'},
-    {'name': 'Ayşe Kaya', 'email': 'ayse@mail.com', 'role': 'Kiracı', 'status': 'Pasif'},
-    {'name': 'Mehmet Demir', 'email': 'mehmet@mail.com', 'role': 'Admin', 'status': 'Aktif'},
-    {'name': 'Zeynep Çelik', 'email': 'zeynep@mail.com', 'role': 'Ev Sahibi', 'status': 'Aktif'},
+    {
+      'name': 'owner1',
+      'email': 'owner1@example.com',
+      'role': 'Ev Sahibi',
+      'status': 'Pasif',
+    },
+    {
+      'name': 'tenant1',
+      'email': 'tenant1@example.com',
+      'role': 'Kiracı',
+      'status': 'Aktif',
+    },
+    {
+      'name': 'owner2',
+      'email': 'owner2@example.com',
+      'role': 'Admin',
+      'status': 'Aktif',
+    },
+    {
+      'name': 'owner3',
+      'email': 'owner3@example.com',
+      'role': 'Ev Sahibi',
+      'status': 'Aktif',
+    },
+    {
+      'name': 'tenant2',
+      'email': 'tenant2@example.com',
+      'role': 'Kiracı',
+      'status': 'Aktif',
+    },
   ];
 
   List<Map<String, String>> filteredUsers = [];
@@ -25,12 +52,13 @@ class _AdminUserManagementPageState extends State<AdminUserManagementPage> {
 
   void _filterUsers() {
     setState(() {
-      filteredUsers = users.where((user) {
-        final searchTerm = searchController.text.toLowerCase();
-        return user['name']!.toLowerCase().contains(searchTerm) ||
-            user['email']!.toLowerCase().contains(searchTerm) ||
-            user['role']!.toLowerCase().contains(searchTerm);
-      }).toList();
+      filteredUsers =
+          users.where((user) {
+            final searchTerm = searchController.text.toLowerCase();
+            return user['name']!.toLowerCase().contains(searchTerm) ||
+                user['email']!.toLowerCase().contains(searchTerm) ||
+                user['role']!.toLowerCase().contains(searchTerm);
+          }).toList();
     });
   }
 
@@ -70,7 +98,10 @@ class _AdminUserManagementPageState extends State<AdminUserManagementPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Kullanıcı Yönetimi'), backgroundColor: Colors.blueAccent),
+      appBar: AppBar(
+        title: Text('Kullanıcı Yönetimi'),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: Padding(
         padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
         child: Column(
@@ -80,7 +111,9 @@ class _AdminUserManagementPageState extends State<AdminUserManagementPage> {
               decoration: InputDecoration(
                 labelText: 'Kullanıcı Ara',
                 suffixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
             ),
             SizedBox(height: 20),
@@ -91,7 +124,9 @@ class _AdminUserManagementPageState extends State<AdminUserManagementPage> {
                   final user = filteredUsers[index];
 
                   return Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
                     elevation: 4,
                     margin: EdgeInsets.symmetric(vertical: 8.0),
                     child: Padding(
@@ -103,25 +138,40 @@ class _AdminUserManagementPageState extends State<AdminUserManagementPage> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(user['name']!,
-                                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                Text(
+                                  user['name']!,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                                 SizedBox(height: 5),
-                                Text('📧 ${user['email']}',
-                                    style: TextStyle(color: Colors.grey[600])),
-                                Text('🎭 Rol: ${user['role']}',
-                                    style: TextStyle(color: Colors.grey[600])),
+                                Text(
+                                  '📧 ${user['email']}',
+                                  style: TextStyle(color: Colors.grey[600]),
+                                ),
+                                Text(
+                                  '🎭 Rol: ${user['role']}',
+                                  style: TextStyle(color: Colors.grey[600]),
+                                ),
                                 SizedBox(height: 5),
                                 Container(
-                                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 5),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 12,
+                                    vertical: 5,
+                                  ),
                                   decoration: BoxDecoration(
-                                    color: _getStatusColor(user['status']!).withOpacity(0.2),
+                                    color: _getStatusColor(
+                                      user['status']!,
+                                    ).withOpacity(0.2),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Text(
                                     user['status']!,
                                     style: TextStyle(
-                                        color: _getStatusColor(user['status']!),
-                                        fontWeight: FontWeight.bold),
+                                      color: _getStatusColor(user['status']!),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ],
@@ -179,28 +229,35 @@ class _AdminUserManagementPageState extends State<AdminUserManagementPage> {
             children: [
               TextField(
                 controller: nameController,
-                decoration: InputDecoration(labelText: 'Ad Soyad', border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                  labelText: 'Ad Soyad',
+                  border: OutlineInputBorder(),
+                ),
               ),
               SizedBox(height: 10),
               TextField(
                 controller: emailController,
-                decoration: InputDecoration(labelText: 'E-posta', border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                  labelText: 'E-posta',
+                  border: OutlineInputBorder(),
+                ),
               ),
               SizedBox(height: 10),
               DropdownButtonFormField(
                 value: selectedRole,
-                items: ['Kiracı', 'Ev Sahibi'].map((role) {
-                  return DropdownMenuItem(
-                    value: role,
-                    child: Text(role),
-                  );
-                }).toList(),
+                items:
+                    ['Kiracı', 'Ev Sahibi'].map((role) {
+                      return DropdownMenuItem(value: role, child: Text(role));
+                    }).toList(),
                 onChanged: (value) {
                   setState(() {
                     selectedRole = value.toString();
                   });
                 },
-                decoration: InputDecoration(labelText: 'Rol', border: OutlineInputBorder()),
+                decoration: InputDecoration(
+                  labelText: 'Rol',
+                  border: OutlineInputBorder(),
+                ),
               ),
             ],
           ),
@@ -213,16 +270,28 @@ class _AdminUserManagementPageState extends State<AdminUserManagementPage> {
               onPressed: () {
                 setState(() {
                   if (index == null) {
-                    users.add({'name': nameController.text, 'email': emailController.text, 'role': selectedRole, 'status': 'Aktif'});
+                    users.add({
+                      'name': nameController.text,
+                      'email': emailController.text,
+                      'role': selectedRole,
+                      'status': 'Aktif',
+                    });
                   } else {
-                    users[index] = {'name': nameController.text, 'email': emailController.text, 'role': selectedRole, 'status': users[index]['status']!};
+                    users[index] = {
+                      'name': nameController.text,
+                      'email': emailController.text,
+                      'role': selectedRole,
+                      'status': users[index]['status']!,
+                    };
                   }
                   _filterUsers();
                 });
                 Navigator.of(context).pop();
               },
               child: Text(index == null ? 'Ekle' : 'Güncelle'),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.blueAccent),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+              ),
             ),
           ],
         );

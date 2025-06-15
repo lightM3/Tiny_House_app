@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TinyHouseBackEnd")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+27fcdb8ab3635608113905f794a29ae2d211a3aa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d90db13bc852ee56b1a4a5adb0e3c66bb00fd302")]
 [assembly: System.Reflection.AssemblyProductAttribute("TinyHouseBackEnd")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TinyHouseBackEnd")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

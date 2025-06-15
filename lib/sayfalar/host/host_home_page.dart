@@ -16,19 +16,38 @@ class _HostHomePageState extends State<HostHomePage> {
   ];
 
   List<Map<String, String>> reservations = [
-    {'guest': 'Ali Yılmaz', 'house': 'Deniz Manzaralı Tiny House', 'date': '10-12 Mayıs'},
-    {'guest': 'Ayşe Kaya', 'house': 'Orman İçinde Bungalov', 'date': '15-18 Haziran'},
+    {
+      'guest': 'tenant1',
+      'house': 'Orman ıçinde Manzaralı Tiny House',
+      'date': '01-05 Haziran',
+    },
+    {
+      'guest': 'tenant3',
+      'house': 'Göl Kenarında Sessiz Tiny House',
+      'date': '10-12 Temmuz',
+    },
   ];
 
   List<Map<String, dynamic>> reviews = [
-    {'user': 'Mehmet Demir', 'comment': 'Harika bir konaklama deneyimi yaşadık!', 'rating': 5},
-    {'user': 'Zeynep Çelik', 'comment': 'Ev çok güzeldi ama internet biraz yavaştı.', 'rating': 4},
+    {
+      'user': 'tenant1',
+      'comment': 'Harika bir konaklama deneyimi yaşadık!',
+      'rating': 5,
+    },
+    {
+      'user': 'tenant3',
+      'comment': 'Ev çok güzeldi ama internet biraz yavaştı.',
+      'rating': 4,
+    },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Ev Sahibi Ana Ekranı'), backgroundColor: Colors.blueAccent),
+      appBar: AppBar(
+        title: Text('Ev Sahibi Ana Ekranı'),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -43,10 +62,34 @@ class _HostHomePageState extends State<HostHomePage> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
                 children: [
-                  _buildActionCard(context, 'İlan Yönetimi', Icons.home, Colors.blueAccent, HostPropertyManagementPage()),
-                  _buildActionCard(context, 'Rezervasyon Yönetimi', Icons.calendar_today, Colors.green, HostReservationManagementPage()),
-                  _buildActionCard(context, 'Yorumlar ve Puanlar', Icons.comment, Colors.orange, HostReviewsPage()),
-                  _buildActionCard(context, 'Ödeme Bilgileri', Icons.payment, Colors.redAccent, HostPaymentPage()),
+                  _buildActionCard(
+                    context,
+                    'İlan Yönetimi',
+                    Icons.home,
+                    Colors.blueAccent,
+                    HostPropertyManagementPage(),
+                  ),
+                  _buildActionCard(
+                    context,
+                    'Rezervasyon Yönetimi',
+                    Icons.calendar_today,
+                    Colors.green,
+                    HostReservationManagementPage(),
+                  ),
+                  _buildActionCard(
+                    context,
+                    'Yorumlar ve Puanlar',
+                    Icons.comment,
+                    Colors.orange,
+                    HostReviewsPage(),
+                  ),
+                  _buildActionCard(
+                    context,
+                    'Ödeme Bilgileri',
+                    Icons.payment,
+                    Colors.redAccent,
+                    HostPaymentPage(),
+                  ),
                 ],
               ),
               SizedBox(height: 20),
@@ -70,7 +113,13 @@ class _HostHomePageState extends State<HostHomePage> {
   }
 
   // 📌 Yönetim Butonları İçin Kart Tasarımı
-  Widget _buildActionCard(BuildContext context, String title, IconData icon, Color color, Widget page) {
+  Widget _buildActionCard(
+    BuildContext context,
+    String title,
+    IconData icon,
+    Color color,
+    Widget page,
+  ) {
     return InkWell(
       onTap: () {
         Navigator.push(context, MaterialPageRoute(builder: (context) => page));
@@ -87,7 +136,11 @@ class _HostHomePageState extends State<HostHomePage> {
           children: [
             Icon(icon, color: color, size: 40),
             SizedBox(height: 8),
-            Text(title, textAlign: TextAlign.center, style: TextStyle(fontWeight: FontWeight.bold, color: color)),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontWeight: FontWeight.bold, color: color),
+            ),
           ],
         ),
       ),
@@ -98,74 +151,109 @@ class _HostHomePageState extends State<HostHomePage> {
   Widget _buildSectionTitle(String title) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10),
-      child: Text(title, style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.blueAccent)),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.blueAccent,
+        ),
+      ),
     );
   }
 
   // 📌 İlan Kartları
   Widget _buildPropertyList() {
     return Column(
-      children: properties.map((property) {
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          elevation: 5,
-          margin: EdgeInsets.symmetric(vertical: 5),
-          child: ListTile(
-            title: Text(property['title']!, style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text(
-              'Durum: ${property['status']}',
-              style: TextStyle(color: property['status'] == 'Aktif' ? Colors.green : Colors.red),
-            ),
-            trailing: Icon(Icons.edit, color: Colors.orange),
-            onTap: () {
-              // Düzenleme sayfasına yönlendirme burada yapılacak
-            },
-          ),
-        );
-      }).toList(),
+      children:
+          properties.map((property) {
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              elevation: 5,
+              margin: EdgeInsets.symmetric(vertical: 5),
+              child: ListTile(
+                title: Text(
+                  property['title']!,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  'Durum: ${property['status']}',
+                  style: TextStyle(
+                    color:
+                        property['status'] == 'Aktif'
+                            ? Colors.green
+                            : Colors.red,
+                  ),
+                ),
+                trailing: Icon(Icons.edit, color: Colors.orange),
+                onTap: () {
+                  // Düzenleme sayfasına yönlendirme burada yapılacak
+                },
+              ),
+            );
+          }).toList(),
     );
   }
 
   // 📌 Rezervasyon Kartları
   Widget _buildReservationList() {
     return Column(
-      children: reservations.map((reservation) {
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          elevation: 5,
-          margin: EdgeInsets.symmetric(vertical: 5),
-          child: ListTile(
-            title: Text('${reservation['guest']}', style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Text('Ev: ${reservation['house']}\nTarih: ${reservation['date']}'),
-            trailing: Icon(Icons.calendar_today, color: Colors.blueAccent),
-          ),
-        );
-      }).toList(),
+      children:
+          reservations.map((reservation) {
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              elevation: 5,
+              margin: EdgeInsets.symmetric(vertical: 5),
+              child: ListTile(
+                title: Text(
+                  '${reservation['guest']}',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  'Ev: ${reservation['house']}\nTarih: ${reservation['date']}',
+                ),
+                trailing: Icon(Icons.calendar_today, color: Colors.blueAccent),
+              ),
+            );
+          }).toList(),
     );
   }
 
   // 📌 Yorum Kartları
   Widget _buildReviewList() {
     return Column(
-      children: reviews.map((review) {
-        return Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          elevation: 5,
-          margin: EdgeInsets.symmetric(vertical: 5),
-          child: ListTile(
-            title: Text(review['user'], style: TextStyle(fontWeight: FontWeight.bold)),
-            subtitle: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(review['comment']),
-                Row(
-                  children: List.generate(review['rating'], (index) => Icon(Icons.star, color: Colors.amber)),
-                )
-              ],
-            ),
-          ),
-        );
-      }).toList(),
+      children:
+          reviews.map((review) {
+            return Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              elevation: 5,
+              margin: EdgeInsets.symmetric(vertical: 5),
+              child: ListTile(
+                title: Text(
+                  review['user'],
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(review['comment']),
+                    Row(
+                      children: List.generate(
+                        review['rating'],
+                        (index) => Icon(Icons.star, color: Colors.amber),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
     );
   }
 }

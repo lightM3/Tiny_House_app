@@ -3,21 +3,67 @@ import 'reservation_detail_page.dart';
 
 class AdminReservationManagementPage extends StatefulWidget {
   @override
-  _AdminReservationManagementPageState createState() => _AdminReservationManagementPageState();
+  _AdminReservationManagementPageState createState() =>
+      _AdminReservationManagementPageState();
 }
 
-class _AdminReservationManagementPageState extends State<AdminReservationManagementPage> {
+class _AdminReservationManagementPageState
+    extends State<AdminReservationManagementPage> {
   List<Map<String, String>> reservations = [
-    {'user': 'Ali Yılmaz', 'house': 'Deniz Manzaralı Tiny House', 'date': '10-12 Mayıs', 'status': 'Onaylandı', 'payment': 'Ödendi'},
-    {'user': 'Ayşe Kaya', 'house': 'Orman İçinde Bungalov', 'date': '15-18 Haziran', 'status': 'Beklemede', 'payment': 'Bekleniyor'},
-    {'user': 'Mehmet Demir', 'house': 'Göl Kenarı Küçük Ev', 'date': '5-7 Temmuz', 'status': 'İptal Edildi', 'payment': 'Ödendi'},
+    {
+      'user': 'tenant1',
+      'house': 'Orman Içinde Manzaralı Tiny House',
+      'date': '01-05 Haziran',
+      'status': 'Bekleniyor',
+      'payment': 'Ödendi',
+    },
+    {
+      'user': 'tenant1',
+      'house': 'Göl Kenarında Sessiz Tiny House',
+      'date': '07 Ekim - 07 Aralık',
+      'status': 'İptal Edildi',
+      'payment': 'Bekleniyor',
+    },
+    {
+      'user': 'tenant2',
+      'house': 'Minimalist Doğa Evi',
+      'date': '5-12 Temmuz',
+      'status': 'Onaylandı',
+      'payment': 'Ödendi',
+    },
+    {
+      'user': 'tenant3',
+      'house': 'Orman Içinde Manzaralı Tiny House',
+      'date': '23-30 Eylül',
+      'status': 'Bekleniyor',
+      'payment': 'Ödendi',
+    },
+    {
+      'user': 'tenant1',
+      'house': 'Plaja 100 metre mesafede ev',
+      'date': '12-18 Temmuz',
+      'status': 'Bekleniyor',
+      'payment': 'Bekleniyor',
+    },
+    {
+      'user': 'tenant2',
+      'house': 'Minimalist Doğa Evi',
+      'date': '18-21 Kasım',
+      'status': 'Onaylandı',
+      'payment': 'Ödendi',
+    },
   ];
 
   List<Map<String, String>> filteredReservations = [];
   final TextEditingController searchController = TextEditingController();
   String selectedStatus = 'Tümü';
 
-  final List<String> statusOptions = ['Tümü', 'Onaylandı', 'Beklemede', 'İptal Edildi'];
+  final List<String> statusOptions = [
+    'Tümü',
+    'Onaylandı',
+    'Beklemede',
+    'İptal Edildi',
+  ];
 
   @override
   void initState() {
@@ -28,13 +74,17 @@ class _AdminReservationManagementPageState extends State<AdminReservationManagem
 
   void _filterReservations() {
     setState(() {
-      filteredReservations = reservations.where((reservation) {
-        final searchTerm = searchController.text.toLowerCase();
-        final matchesSearch = reservation['user']!.toLowerCase().contains(searchTerm) ||
-            reservation['house']!.toLowerCase().contains(searchTerm);
-        final matchesStatus = selectedStatus == 'Tümü' || reservation['status'] == selectedStatus;
-        return matchesSearch && matchesStatus;
-      }).toList();
+      filteredReservations =
+          reservations.where((reservation) {
+            final searchTerm = searchController.text.toLowerCase();
+            final matchesSearch =
+                reservation['user']!.toLowerCase().contains(searchTerm) ||
+                reservation['house']!.toLowerCase().contains(searchTerm);
+            final matchesStatus =
+                selectedStatus == 'Tümü' ||
+                reservation['status'] == selectedStatus;
+            return matchesSearch && matchesStatus;
+          }).toList();
     });
   }
 
@@ -66,7 +116,10 @@ class _AdminReservationManagementPageState extends State<AdminReservationManagem
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Rezervasyon Yönetimi'), backgroundColor: Colors.blueAccent),
+      appBar: AppBar(
+        title: Text('Rezervasyon Yönetimi'),
+        backgroundColor: Colors.blueAccent,
+      ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
         child: Column(
@@ -122,12 +175,13 @@ class _AdminReservationManagementPageState extends State<AdminReservationManagem
         child: DropdownButton<String>(
           value: selectedStatus,
           icon: Icon(Icons.arrow_drop_down, color: Colors.blueAccent),
-          items: statusOptions.map((String status) {
-            return DropdownMenuItem<String>(
-              value: status,
-              child: Text(status),
-            );
-          }).toList(),
+          items:
+              statusOptions.map((String status) {
+                return DropdownMenuItem<String>(
+                  value: status,
+                  child: Text(status),
+                );
+              }).toList(),
           onChanged: (String? newValue) {
             setState(() {
               selectedStatus = newValue!;
@@ -167,7 +221,9 @@ class _AdminReservationManagementPageState extends State<AdminReservationManagem
                     final updatedReservation = await Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ReservationDetailPage(reservation: reservation),
+                        builder:
+                            (context) =>
+                                ReservationDetailPage(reservation: reservation),
                       ),
                     );
                     if (updatedReservation != null) {
@@ -197,12 +253,15 @@ class _AdminReservationManagementPageState extends State<AdminReservationManagem
       ),
       child: Text(
         status,
-        style: TextStyle(color: _getStatusColor(status), fontWeight: FontWeight.bold),
+        style: TextStyle(
+          color: _getStatusColor(status),
+          fontWeight: FontWeight.bold,
+        ),
       ),
     );
   }
 
-/*
+  /*
   // 📌 Onayla/Reddet Butonları (Sadece "Beklemede" olanlar için)
   Widget _buildActionButtons(int index) {
     return Row(

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\TinyHouseBackEnd.csproj": {}
+    "C:\\FlutterProject\\my_tiny_house_app\\BackendFiles\\TinyHouseBackEnd\\TinyHouseBackEnd.csproj": {}
   },
   "projects": {
-    "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\TinyHouseBackEnd.csproj": {
+    "C:\\FlutterProject\\my_tiny_house_app\\BackendFiles\\TinyHouseBackEnd\\TinyHouseBackEnd.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\TinyHouseBackEnd.csproj",
+        "projectUniqueName": "C:\\FlutterProject\\my_tiny_house_app\\BackendFiles\\TinyHouseBackEnd\\TinyHouseBackEnd.csproj",
         "projectName": "TinyHouseBackEnd",
-        "projectPath": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\TinyHouseBackEnd.csproj",
-        "packagesPath": "C:\\Users\\berat\\.nuget\\packages\\",
-        "outputPath": "D:\\Tiny_House_app\\BackendFiles\\TinyHouseBackEnd\\obj\\",
+        "projectPath": "C:\\FlutterProject\\my_tiny_house_app\\BackendFiles\\TinyHouseBackEnd\\TinyHouseBackEnd.csproj",
+        "packagesPath": "C:\\Users\\Murat\\.nuget\\packages\\",
+        "outputPath": "C:\\FlutterProject\\my_tiny_house_app\\BackendFiles\\TinyHouseBackEnd\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\berat\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Murat\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,7 +44,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net8.0": {
@@ -71,12 +70,30 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[8.0.15, 8.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[8.0.15, 8.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[8.0.15, 8.0.15]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[8.0.15, 8.0.15]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

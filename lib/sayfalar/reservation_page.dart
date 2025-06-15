@@ -13,14 +13,9 @@ class ReservationPage extends StatelessWidget {
               decoration: InputDecoration(labelText: 'Başlangic Tarihi'),
             ),
             SizedBox(height: 10),
-            TextField(
-              decoration: InputDecoration(labelText: 'Bitis Tarihi'),
-            ),
+            TextField(decoration: InputDecoration(labelText: 'Bitis Tarihi')),
             SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('Rezervasyon Onayla'),
-            ),
+            ElevatedButton(onPressed: () {}, child: Text('Rezervasyon Onayla')),
           ],
         ),
       ),
